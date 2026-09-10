@@ -5,6 +5,7 @@ public class MoveController : MonoBehaviour
 {
     private new Camera camera;
     private Rigidbody rigid;
+    [SerializeField] private PlayerAttack attackController;
     private Vector3 moveDirection = Vector3.zero;
     private Vector3 c_forward;
     private Vector3 c_right;
@@ -53,7 +54,7 @@ public class MoveController : MonoBehaviour
     public void OnAttack(InputValue value)
     {
         Debug.Log("attack");
-        
+        attackController.Attack();
     }
 
     void FixedUpdate()
