@@ -631,6 +631,7 @@ GameObject:
   - component: {fileID: 1512527645}
   - component: {fileID: 1512527647}
   - component: {fileID: 1512527646}
+  - component: {fileID: 1512527648}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -804,6 +805,18 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 256
+--- !u!114 &1512527648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1512527640}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e62f3956ab69d1042be003146aa01dcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1722828362
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,6 +949,7 @@ GameObject:
   - component: {fileID: 1926278899}
   - component: {fileID: 1926278898}
   - component: {fileID: 1926278897}
+  - component: {fileID: 1926278901}
   - component: {fileID: 1926278900}
   - component: {fileID: 1926278896}
   m_Layer: 9
@@ -1054,6 +1068,20 @@ MonoBehaviour:
       m_Calls: []
   rootTransform: {fileID: 0}
   _isDead: 0
+--- !u!114 &1926278901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926278895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21999955c556940498666a7c32ec4179, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 50
+  exp: 100
 --- !u!1 &2021193561
 GameObject:
   m_ObjectHideFlags: 0
