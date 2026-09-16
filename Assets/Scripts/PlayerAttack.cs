@@ -5,6 +5,7 @@ public class PlayerAttack : MonoBehaviour, HitBox.IHitboxResponder
     public HitBox hammerHitbox;
     public Animator anim;
     public MoveController moveController;
+    public float knockbackForce = 5f;
     void Awake()
     {
         if(hammerHitbox == null)
@@ -37,7 +38,7 @@ public class PlayerAttack : MonoBehaviour, HitBox.IHitboxResponder
 
         if(_hurtBox == null) return;
 
-        DamageInfo info = new (10f, hammerHitbox.transform.position, hammerHitbox);
+        DamageInfo info = new (10f, hammerHitbox.transform.position, hammerHitbox, knockbackForce);
         _hurtBox.GetDamage(info);
     }
 }

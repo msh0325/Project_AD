@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -15,6 +17,7 @@ public class Enemy : MonoBehaviour
     private Vector3 dashDirection;
 
     [SerializeField] private float detectRange = 5f;
+    [SerializeField] private float stopDistanse = 2f;
     [SerializeField] private EnemyAttack enemyAttack;
     private float lastAttackTime = -999f;
     private bool isMove = false;
@@ -23,6 +26,8 @@ public class Enemy : MonoBehaviour
 
     public void SetMoving(bool value) => isMove = value;
     [SerializeField] private float attackCooltime = 5f;
+
+    public event Action<Enemy> onDeath;
     void Awake()
     {
         _hurtBox = GetComponent<HurtBox>();
@@ -91,6 +96,9 @@ public class Enemy : MonoBehaviour
 
     private void MoveToTarget()
     {
+        float dist = Vector3.Distance(transform.position, target.transform.position);
+        if(dist <= stopDistanse) return;
+
         transform.position = Vector3.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
     }
 
@@ -109,14 +117,46 @@ public class Enemy : MonoBehaviour
     {
         Debug.Log(dmgInfo._dmg);
         hp -= dmgInfo._dmg;
+        Vector3 dir = transform.position - dmgInfo._dmgPos;
+        dir.y = 0;
+
+        if(dir.sqrMagnitude > 0.001f)
+        {
+            StartCoroutine(Knockback(dir.normalized, dmgInfo._knockbackForce));
+        }
 
         if(hp <= 0) 
         {
-            _hurtBox.SetIsDead(true);
+            Die();
+            /*_hurtBox.SetIsDead(true);
             Debug.Log($"exp 지급: {exp}");
             target.GainExp(exp);
             
-            gameObject.SetActive(false);
+            gameObject.SetActive(false);*/
         }
+    }
+
+    private void Die()
+    {
+        _hurtBox.SetIsDead(true);
+        Debug.Log($"exp 지급: {exp}");
+        target.GainExp(exp);
+        onDeath?.Invoke(this);
+
+        gameObject.SetActive(false);
+    }
+
+    IEnumerator Knockback(Vector3 dir, float force)
+    {
+        SetMoving(false);
+        float duration = 0.15f;
+        float elapsed = 0f;
+        while(elapsed < duration)
+        {
+            transform.position += dir * force * (1f-elapsed / duration) * Time.deltaTime;
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+        SetMoving(true);
     }
 }
